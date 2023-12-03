@@ -1,21 +1,61 @@
 [
     {
-        "name": "Hoodie with Logo",
+        "name": "Blue Hoodie",
         "desc": "This is a simple product.",
-        "banner": "http://www.google.com/image.jpeg",
+        "banner": "http://www.ecommerce-shop.com/assets/hoodie.jpeg",
         "type": "outer",
-        "unit": 1,
+        "unit": 30,
         "price": 150000,
         "available": true,
         "supplier": "Uniqlo"
     },
     {
-        "name": "Shirt with Logo",
+        "name": "Red Shirt",
         "desc": "This is a simple product.",
-        "banner": "http://www.google.com/image.jpeg",
+        "banner": "http://www.ecommerce-shop.com/assets/red-shirt.jpeg",
         "type": "t-shirt",
-        "unit": 1,
+        "unit": 30,
         "price": 100000,
+        "available": true,
+        "supplier": "H&M"
+    },
+    {
+        "name": "Football Jersey",
+        "desc": "This is a simple product.",
+        "banner": "http://www.ecommerce-shop.com/assets/jersey.jpeg",
+        "type": "t-shirt",
+        "unit": 30,
+        "price": 200000,
+        "available": true,
+        "supplier": "Uniqlo"
+    },
+    {
+        "name": "Running Shoes",
+        "desc": "This is a simple product.",
+        "banner": "http://www.ecommerce-shop.com/assets/jersey.jpeg",
+        "type": "shoes",
+        "unit": 30,
+        "price": 300000,
+        "available": true,
+        "supplier": "Adidas"
+    },
+    {
+        "name": "Hat",
+        "desc": "This is a simple product.",
+        "banner": "http://www.ecommerce-shop.com/assets/hat.jpeg",
+        "type": "hat",
+        "unit": 50,
+        "price": 100000,
+        "available": true,
+        "supplier": "Uniqlo"
+    },
+    {
+        "name": "Motorcycle Jacket",
+        "desc": "This is a simple product.",
+        "banner": "http://www.ecommerce-shop.com/assets/hat.jpeg",
+        "type": "outer",
+        "unit": 30,
+        "price": 300000,
         "available": true,
         "supplier": "Uniqlo"
     }
