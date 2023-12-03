@@ -1,5 +1,4 @@
 const express = require('express');
-
 const { PORT } = require('./config');
 const { databaseConn } = require('./database');
 const expressApp = require('./express-app');

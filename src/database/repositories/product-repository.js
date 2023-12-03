@@ -14,7 +14,7 @@ class ProductRepository {
             return productResult;    
 
         } catch (error) {
-            throw APIError('API Error', 500, 'Failed to create product');
+            throw new APIError('API Error', 500, 'Failed to create product');
         }
         
 
@@ -26,7 +26,7 @@ class ProductRepository {
             return await Product.find();
 
         } catch (error) {
-            throw APIError('API Error', 500, 'Failed to retrieve products');
+            throw new APIError('API Error', 500, 'Failed to retrieve products');
         }
     }
 
@@ -35,7 +35,7 @@ class ProductRepository {
             return await Product.findById(id);
 
         } catch (error) {
-            throw APIError('API Error', 500, 'Failed to retrieve product');
+            throw new APIError('API Error', 500, 'Failed to retrieve product');
         }
 
     }
@@ -45,11 +45,12 @@ class ProductRepository {
             return await Product.find({ type: category });
 
         } catch (error) {
-            throw APIError('API Error', 500, 'Failed to retrieve product');
+            throw new APIError('API Error', 500, 'Failed to retrieve product');
         }
     }
 
     async reduceUnits(idAndUnitList) {
+        console.log("idUnitAndList:", idAndUnitList)
         try {
             let ops = [];
             for (let item of idAndUnitList) {
@@ -59,7 +60,8 @@ class ProductRepository {
             }
             return await Promise.all(ops);
         } catch(e) {
-            throw APIError('API Error', 500, e);
+            console.log(e)
+            throw new APIError('API Error', 500, e);
         }
     }
 

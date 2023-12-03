@@ -12,22 +12,32 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.3.10",
     "eslint": "^8.54.0",
-    "nodemon": "^3.0.1"
+    "mocha": "^10.2.0",
+    "mock-express-response": "^0.3.0",
+    "nodemon": "^3.0.1",
+    "nyc": "^15.1.0",
+    "run-middleware": "^0.9.10",
+    "sinon": "^17.0.1",
+    "sinon-chai": "^3.7.0"
   },
   "dependencies": {
     "amqplib": "^0.10.3",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "kafka-node": "^5.0.0",
     "kafkajs": "^2.2.4",
-    "mongoose": "^8.0.1",
+    "mongoose": "^8.0.2",
+    "uuid": "^9.0.1",
     "validate.js": "^0.13.1",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1"
   }
 }
