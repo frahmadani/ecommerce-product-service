@@ -82,6 +82,20 @@ class ProductService {
         return result;
     }
 
+    async revertStock(itemList) {
+        console.log("itemList:", itemList)
+        for (let idunit of itemList.items) {
+            idunit.unit = idunit.unit * -1 // to reverse the reduce
+        }
+        let result = {};
+        try {
+            result = await this.repository.reduceUnits(itemList.items)
+        } catch(e) {
+            result.err = e
+        }
+        return result;
+    }
+
 }
 
 module.exports = ProductService;
