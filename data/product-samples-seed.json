@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Hoodie with Logo",
+        "desc": "This is a simple product.",
+        "banner": "http://www.google.com/image.jpeg",
+        "type": "outer",
+        "unit": 1,
+        "price": 150000,
+        "available": true,
+        "supplier": "Uniqlo"
+    },
+    {
+        "name": "Shirt with Logo",
+        "desc": "This is a simple product.",
+        "banner": "http://www.google.com/image.jpeg",
+        "type": "t-shirt",
+        "unit": 1,
+        "price": 100000,
+        "available": true,
+        "supplier": "Uniqlo"
+    }
+]
