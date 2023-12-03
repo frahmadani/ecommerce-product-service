@@ -1,6 +1,7 @@
 const ProductService = require('../services/product-service');
 const isAuth = require('./middlewares/auth');
 const kafkaProducer = require('../utils/kafka/kafka_producer');
+const logger = require('../utils/app-logger');
 
 
 module.exports = async (app) => {
@@ -8,47 +9,59 @@ module.exports = async (app) => {
     const service = new ProductService();
 
     app.post('/product/create', async (req, res, next) => {
+        logger.info('API POST /product/create is called');
         const { name, desc, banner, type, unit, price, available, supplier } = req.body;
 
         const { data } = await service.createProduct({
             name, desc, banner, type, unit, price, available, supplier  
         });
 
+        logger.info('Success creating product');
         return res.json(data);
     });
 
     app.get('/product/:id', async (req, res, next) => {
+        logger.info('API GET /product/:id is called');
         const productId = req.params.id;
 
         try {
             const { data } = await service.getProductById(productId);
+            logger.info('Success retrieving product by id')
             return res.status(200).json(data);
         } catch (err) {
+            logger.error(`Failed retrieving product by id: ${err}`)
             return res.status(404).json({ err });
         }
     });
 
     app.get('/product', async (req, res, next) => {
+        logger.info('API GET /product is called');
         try {
             const { data } = await service.getProducts();
+            logger.info('Success retrieving products')
             return res.status(200).json(data);
         } catch (error) {
+            logger.error(`Failed retrieving products: ${error}`)
             return res.status(404).json({ error });
         }
     });
 
     app.get('/product/category/:type', async (req, res, next) => {
+        logger.info('API GET /product/category/:type is called');
         const type = req.params.type;
 
         try {
             const { data } = await service.getProductsByCategory(type);
+            logger.info('Success retrieving products by category');
             return res.json(data);
         } catch (error) {
+            logger.error(`Failed retrieving products by category: ${error}`);
             return res.status(404).json({ error });
         }
     });
 
     app.put('/product/cart', isAuth, async (req, res, next) => {
+        logger.info('API PUT /product/cart is called');
 
         const userId = req.user._id;
         const { _id, qty } = req.body;
@@ -66,6 +79,7 @@ module.exports = async (app) => {
             kafkaProducer.send(dataToKafka);
 
             console.log('Data yg dikirim ke user service dan order service: ', dataToKafka);
+            logger.info('Success sending message Add To Cart to kafka');
 
             console.log('Success sending message Add To Cart to kafka');
         
@@ -74,15 +88,18 @@ module.exports = async (app) => {
                 qty: data.data.qty
             };
 
+            logger.info('Success adding product to cart');
             return res.status(200).json(response);
 
         } catch (error) {
+            logger.error(`Failed adding product to cart: ${error}`);
             return res.status(500).json({ error });
         }
 
     });
 
     app.delete('/product/cart/:id', isAuth, async (req, res, next) => {
+        logger.info('API DELETE /product/cart/:id is called');
 
         const userId = req.user._id;
         const productId = req.params.id;
@@ -101,6 +118,7 @@ module.exports = async (app) => {
 
             console.log('Data yg dikirim ke user service dan order service: ', dataToKafka);
 
+            logger.info('Success sending message Remove From Cart to kafka');
             console.log('Success sending message Remove From Cart to kafka');
         
             const response = {
@@ -108,9 +126,11 @@ module.exports = async (app) => {
                 qty: data.data.qty
             };
 
+            logger.info('Success removing product from cart');
             return res.status(200).json(response);
 
         } catch (error) {
+            logger.error(`Failed removing product from cart: ${error}`);
             return res.status(500).json({ error });
         }
         
