@@ -12,23 +12,22 @@ const addOrder = async () => {
     consumer.on('message', async (message) => {
         try {
 
-            // const result = await order.createOrder(message); -> TO CHANGE, BELUM SELESAI
+            let { payload } = JSON.parse(message.value);
+            let data = payload?.data?.data;
+            const result = await product.createOrder(data);
 
-            console.log('Data diterima: ', message);
-
-            console.log('Value: ', JSON.parse(message.value));
-            // if (result.err) {
-            //     // logger.log(ctx, result.err, 'Data not commit Kafka');
-            // } else {
-            //     consumer.commit(true, async (err, data) => {
-            //         if (err) {
-            //             // logger.log(ctx, err, 'Data not commit Kafka');
-            //         }
-            //         //   logger.log(ctx, data, 'Data Commit Kafka');
-            //     });
-            // }
+            if (result.err) {
+                console.log(ctx, result.err, 'Data not commit Kafka');
+            } else {
+                consumer.commit(true, async (err, data) => {
+                    if (err) {
+                        console.log(ctx, err, 'Data not commit Kafka');
+                    }
+                      console.log(ctx, data, 'Data Commit Kafka');
+                });
+            }
         } catch (error) {
-            //   logger.log(ctx, error, 'Data error');
+              console.log(ctx, error, 'Data error');
         }
     });
 };

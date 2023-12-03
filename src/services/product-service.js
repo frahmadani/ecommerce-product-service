@@ -3,8 +3,12 @@ const { formattedData } = require('../utils');
 
 class ProductService {
 
-    constructor() {
-        this.repository = new ProductRepository();
+    constructor(productRepo) {
+        if (productRepo) {
+            this.repository = productRepo;
+        } else {
+            this.repository = new ProductRepository();
+        }
     }
 
     async createProduct(productData) {
@@ -19,7 +23,7 @@ class ProductService {
 
         let categories = {};
 
-        products.map(({ type }) => {
+        products.forEach(({ type }) => {
             categories[type] = type;
         });
 
@@ -58,6 +62,24 @@ class ProductService {
         }
 
         return formattedData({ error: 'No product found'});
+    }
+
+    async createOrder(bodydata) {
+        const items = bodydata?.order?.items?.map((val, _idx) => {
+            return {
+                id: val?.product?._id,
+                unit: val?.unit
+            };
+
+        });
+        console.log("Items: ", items);
+        let result = {};
+        try {
+            await this.repository.reduceUnits(items);
+        } catch(e) {
+            result.err = e;
+        }
+        return result;
     }
 
 }

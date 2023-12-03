@@ -63,7 +63,7 @@ module.exports = async (app) => {
                 attributes: 1
             };
 
-            await kafkaProducer.send(dataToKafka);
+            kafkaProducer.send(dataToKafka);
 
             console.log('Data yg dikirim ke user service dan order service: ', dataToKafka);
 
@@ -97,7 +97,7 @@ module.exports = async (app) => {
                 attributes: 1
             };
 
-            await kafkaProducer.send(dataToKafka);
+            kafkaProducer.send(dataToKafka);
 
             console.log('Data yg dikirim ke user service dan order service: ', dataToKafka);
 

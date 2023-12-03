@@ -49,6 +49,20 @@ class ProductRepository {
         }
     }
 
+    async reduceUnits(idAndUnitList) {
+        try {
+            let ops = [];
+            for (let item of idAndUnitList) {
+                ops.push(Product.findByIdAndUpdate(item.id, { "$inc": {
+                    unit: -item.unit
+                }}));
+            }
+            return await Promise.all(ops);
+        } catch(e) {
+            throw APIError('API Error', 500, e);
+        }
+    }
+
 }
 
 module.exports = ProductRepository;
