@@ -17,7 +17,7 @@ module.exports = async (app) => {
         });
 
         logger.info('Success creating product');
-        return res.json(data);
+        return res.status(201).json({status: 'success', message: 'Success creating product', data});
     });
 
     app.get('/product/:id', async (req, res, next) => {
@@ -27,10 +27,10 @@ module.exports = async (app) => {
         try {
             const { data } = await service.getProductById(productId);
             logger.info('Success retrieving product by id')
-            return res.status(200).json(data);
+            return res.status(200).json({ status: 'success', message: 'Success retrieving product by id', data});
         } catch (err) {
             logger.error(`Failed retrieving product by id: ${err}`)
-            return res.status(404).json({ err });
+            return res.status(404).json({ status: 'error', message: 'Failed retrieving product by id' });
         }
     });
 
@@ -39,10 +39,10 @@ module.exports = async (app) => {
         try {
             const { data } = await service.getProducts();
             logger.info('Success retrieving products')
-            return res.status(200).json(data);
+            return res.status(200).json({ status: 'success', message: 'Success retrieving products', data});
         } catch (error) {
-            logger.error(`Failed retrieving products: ${error}`)
-            return res.status(404).json({ error });
+            logger.error(`Failed retrieving products: ${error}`);
+            return res.status(404).json({ status: 'error', message: 'Failed retrieving products' });
         }
     });
 
@@ -53,10 +53,10 @@ module.exports = async (app) => {
         try {
             const { data } = await service.getProductsByCategory(type);
             logger.info('Success retrieving products by category');
-            return res.json(data);
+            return res.status(200).json({status: 'success', message: 'Success retrieving products by category', data});
         } catch (error) {
             logger.error(`Failed retrieving products by category: ${error}`);
-            return res.status(404).json({ error });
+            return res.status(404).json({ status: 'error', message: 'Failed retrieving products by category', data: error });
         }
     });
 
@@ -89,11 +89,12 @@ module.exports = async (app) => {
             };
 
             logger.info('Success adding product to cart');
-            return res.status(200).json(response);
+            return res.status(200).json({status: 'success', message: 'Success adding product to cart', data: response});
 
         } catch (error) {
             logger.error(`Failed adding product to cart: ${error}`);
-            return res.status(500).json({ error });
+        
+            return res.status(500).json({ status: 'error', message: 'Failed adding product to cart', data: error });
         }
 
     });
@@ -127,11 +128,11 @@ module.exports = async (app) => {
             };
 
             logger.info('Success removing product from cart');
-            return res.status(200).json(response);
+            return res.status(200).json({status: 'success', message: 'Success removing product from cart', data: response});
 
         } catch (error) {
             logger.error(`Failed removing product from cart: ${error}`);
-            return res.status(500).json({ error });
+            return res.status(500).json({status: 'error', message: 'Failed removing product from cart', data: error });
         }
         
     });
