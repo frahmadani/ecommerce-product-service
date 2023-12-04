@@ -13,11 +13,13 @@ module.exports = async (app) => {
         const { name, desc, banner, type, unit, price, available, supplier } = req.body;
 
         const { data } = await service.createProduct({
-            name, desc, banner, type, unit, price, available, supplier  
+            name, desc, banner, type, unit, price, available, supplier
         });
 
-        logger.info('Success creating product');
-        return res.status(201).json({status: 'success', message: 'Success creating product', data});
+        return res.status(200).json({
+            status: "success", message: "success",
+            data,
+        });
     });
 
     app.get('/product/:id', async (req, res, next) => {
@@ -26,11 +28,14 @@ module.exports = async (app) => {
 
         try {
             const { data } = await service.getProductById(productId);
-            logger.info('Success retrieving product by id')
-            return res.status(200).json({ status: 'success', message: 'Success retrieving product by id', data});
+            return res.status(200).json({
+                status: "success", message: "success",
+                data,
+            });
         } catch (err) {
-            logger.error(`Failed retrieving product by id: ${err}`)
-            return res.status(404).json({ status: 'error', message: 'Failed retrieving product by id' });
+            return res.status(404).json({
+                status: "error", message: error
+            });
         }
     });
 
@@ -38,11 +43,14 @@ module.exports = async (app) => {
         logger.info('API GET /product is called');
         try {
             const { data } = await service.getProducts();
-            logger.info('Success retrieving products')
-            return res.status(200).json({ status: 'success', message: 'Success retrieving products', data});
+            return res.status(200).json({
+                status: "success", message: "success",
+                data,
+            });
         } catch (error) {
-            logger.error(`Failed retrieving products: ${error}`);
-            return res.status(404).json({ status: 'error', message: 'Failed retrieving products' });
+            return res.status(404).json({
+                status: "error", message: error
+            });
         }
     });
 
@@ -52,11 +60,14 @@ module.exports = async (app) => {
 
         try {
             const { data } = await service.getProductsByCategory(type);
-            logger.info('Success retrieving products by category');
-            return res.status(200).json({status: 'success', message: 'Success retrieving products by category', data});
+            return res.status(200).json({
+                status: "success", message: "success",
+                data,
+            });
         } catch (error) {
-            logger.error(`Failed retrieving products by category: ${error}`);
-            return res.status(404).json({ status: 'error', message: 'Failed retrieving products by category', data: error });
+            return res.status(404).json({
+                status: "error", message: error
+            });
         }
     });
 
@@ -82,19 +93,21 @@ module.exports = async (app) => {
             logger.info('Success sending message Add To Cart to kafka');
 
             console.log('Success sending message Add To Cart to kafka');
-        
+
             const response = {
                 product: data.data.product,
                 qty: data.data.qty
             };
 
-            logger.info('Success adding product to cart');
-            return res.status(200).json({status: 'success', message: 'Success adding product to cart', data: response});
+            return res.status(200).json({
+                status: "success", message: "success",
+                data: response,
+            });
 
         } catch (error) {
-            logger.error(`Failed adding product to cart: ${error}`);
-        
-            return res.status(500).json({ status: 'error', message: 'Failed adding product to cart', data: error });
+            return res.status(500).json({
+                status: "error", message: error
+            });
         }
 
     });
@@ -121,20 +134,23 @@ module.exports = async (app) => {
 
             logger.info('Success sending message Remove From Cart to kafka');
             console.log('Success sending message Remove From Cart to kafka');
-        
+
             const response = {
                 product: data.data.product,
                 qty: data.data.qty
             };
 
-            logger.info('Success removing product from cart');
-            return res.status(200).json({status: 'success', message: 'Success removing product from cart', data: response});
+            return res.status(200).json({
+                status: "success", message: "success",
+                data: response
+            });
 
         } catch (error) {
-            logger.error(`Failed removing product from cart: ${error}`);
-            return res.status(500).json({status: 'error', message: 'Failed removing product from cart', data: error });
+            return res.status(500).json({
+                status: "error", message: error
+            });
         }
-        
+
     });
 
 };
