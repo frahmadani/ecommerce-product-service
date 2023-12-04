@@ -30,9 +30,19 @@ class ProductRepository {
         }
     }
 
-    async FindProductById(id) {
+    async FindProductById(id, qty) {
         try {
-            return await Product.findById(id);
+            const product = await Product.findById(id)
+            if (!product) {
+                return { code: 404, err: "Not found" }
+            }
+            if (product.unit < qty) {
+                return {
+                    code: 400,
+                    err: `Requested quantity (${qty}) more than stock (${product.unit})`
+                }
+            }
+            return product
 
         } catch (error) {
             throw new APIError('API Error', 500, 'Failed to retrieve product');
@@ -50,7 +60,7 @@ class ProductRepository {
     }
 
     async reduceUnits(idAndUnitList) {
-        console.log("idUnitAndList:", idAndUnitList)
+        console.log("idAndUnitList (reduceUnits):", idAndUnitList)
         try {
             let ops = [];
             for (let item of idAndUnitList) {

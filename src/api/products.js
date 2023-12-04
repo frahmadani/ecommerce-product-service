@@ -34,7 +34,7 @@ module.exports = async (app) => {
             });
         } catch (err) {
             return res.status(404).json({
-                status: "error", message: error
+                status: "error", message: err?.message
             });
         }
     });
@@ -49,7 +49,7 @@ module.exports = async (app) => {
             });
         } catch (error) {
             return res.status(404).json({
-                status: "error", message: error
+                status: "error", message: error?.message
             });
         }
     });
@@ -66,7 +66,7 @@ module.exports = async (app) => {
             });
         } catch (error) {
             return res.status(404).json({
-                status: "error", message: error
+                status: "error", message: error?.message
             });
         }
     });
@@ -79,6 +79,11 @@ module.exports = async (app) => {
 
         try {
             const { data } = await service.getProductPayload(userId, { productId: _id, qty: qty }, 'ADD_TO_CART');
+            if (data?.err) {
+                return res.status(data.code).json({
+                    status: "error", message: data.err,
+                })
+            }
 
             const dataToKafka = {
                 topic: 'ecommerce-service-add-to-cart',
@@ -106,7 +111,7 @@ module.exports = async (app) => {
 
         } catch (error) {
             return res.status(500).json({
-                status: "error", message: error
+                status: "error", message: error?.message
             });
         }
 

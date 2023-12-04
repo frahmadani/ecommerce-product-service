@@ -47,7 +47,10 @@ class ProductService {
 
     async getProductPayload(userId, { productId, qty}, event) {
 
-        const product = await this.repository.FindProductById(productId);
+        const product = await this.repository.FindProductById(productId, qty);
+        if (product?.err) {
+            return formattedData(product)
+        }
 
         if (product) {
             const payload = {
@@ -83,7 +86,7 @@ class ProductService {
     }
 
     async revertStock(itemList) {
-        console.log("itemList:", itemList)
+        console.log("itemList (revertStock):", itemList)
         for (let idunit of itemList.items) {
             idunit.unit = idunit.unit * -1 // to reverse the reduce
         }
